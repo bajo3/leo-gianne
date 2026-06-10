@@ -1,0 +1,223 @@
+/* ===========================================================
+   Leo & Gianne — Invitación de Casamiento
+   Paleta natural / tierra · Tandil, Buenos Aires
+   =========================================================== */
+
+:root {
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --reveal-y: 26px;
+  --maxw: 1080px;
+
+  /* fuentes (compartidas por todas las direcciones) */
+  --font-display: 'Cormorant Garamond', serif;
+  --font-body: 'Jost', sans-serif;
+  --font-script: 'Pinyon Script', cursive;
+  --display-weight: 500;
+  --display-tracking: 0.01em;
+
+  /* superficie cálida hueso (compartida) */
+  --c-bg:    #F7F3EB;
+  --c-bg2:   #EFE8DA;
+  --c-panel: #FFFFFF;
+  --c-ink:   #2E2A22;
+  --c-soft:  #5B5345;
+  --c-muted: #998E7B;
+  --c-line:  rgba(46, 42, 34, 0.13);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--c-bg);
+  color: var(--c-ink);
+  font-family: var(--font-body);
+  font-weight: 350;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  letter-spacing: 0.005em;
+  overflow-x: hidden;
+}
+
+/* ---------- ACENTOS (cambian con el Tweak) ---------- */
+[data-accent="terracota"] { --c-accent: #B0734A; }
+[data-accent="olivo"]     { --c-accent: #7E8B5B; }
+[data-accent="tierra"]    { --c-accent: #9C7A53; }
+[data-accent="dorado"]    { --c-accent: #C2A35A; }
+
+/* ---------- TYPE HELPERS ---------- */
+.font-display { font-family: var(--font-display); font-weight: var(--display-weight); letter-spacing: var(--display-tracking); }
+.font-script  { font-family: var(--font-script); font-weight: 400; }
+.eyebrow {
+  font-family: var(--font-body);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.42em;
+  font-size: 11px;
+  color: var(--c-accent);
+}
+@media (min-width: 768px) { .eyebrow { font-size: 12px; } }
+
+.lead { color: var(--c-soft); line-height: 1.85; font-weight: 350; }
+
+/* ---------- DECOR ---------- */
+.rule { height: 1px; width: 64px; background: var(--c-accent); opacity: 0.55; margin: 0 auto; }
+.rule-v { width: 1px; height: 56px; background: var(--c-line); margin: 0 auto; }
+.diamond { width: 7px; height: 7px; background: var(--c-accent); transform: rotate(45deg); opacity: 0.85; }
+.ornament { display: inline-flex; align-items: center; gap: 14px; color: var(--c-accent); }
+.ornament::before, .ornament::after { content: ""; width: 46px; height: 1px; background: currentColor; opacity: 0.45; }
+
+/* ---------- BUTTONS ---------- */
+.btn {
+  --pad-y: 15px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  padding: var(--pad-y) 28px;
+  font-family: var(--font-body); font-weight: 500;
+  font-size: 12.5px; letter-spacing: 0.14em; text-transform: uppercase;
+  border-radius: 999px; cursor: pointer; text-decoration: none;
+  white-space: nowrap; border: 1px solid transparent;
+  transition: transform .45s var(--ease), background .4s var(--ease), color .4s var(--ease), box-shadow .45s var(--ease), border-color .4s var(--ease);
+  min-height: 52px;
+}
+.btn-solid {
+  background: var(--c-accent); color: #fff;
+  box-shadow: 0 14px 30px -16px color-mix(in oklab, var(--c-accent) 80%, black);
+}
+.btn-solid:hover { transform: translateY(-2px); box-shadow: 0 20px 40px -16px color-mix(in oklab, var(--c-accent) 75%, black); }
+.btn-ghost { background: transparent; color: var(--c-ink); border-color: var(--c-line); }
+.btn-ghost:hover { transform: translateY(-2px); border-color: var(--c-accent); color: var(--c-accent); }
+
+/* ---------- PHOTO PLACEHOLDER ---------- */
+.photo {
+  position: relative; overflow: hidden;
+  background-color: var(--c-bg2);
+  background-image:
+    repeating-linear-gradient(135deg,
+      color-mix(in oklab, var(--c-accent) 9%, transparent) 0px,
+      color-mix(in oklab, var(--c-accent) 9%, transparent) 1px,
+      transparent 1px, transparent 11px);
+}
+.photo::after {
+  content: attr(data-label);
+  position: absolute; inset: 0; margin: auto;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Jost', monospace; font-size: 10px; letter-spacing: 0.28em;
+  text-transform: uppercase; color: var(--c-muted);
+  text-align: center; padding: 16px; pointer-events: none;
+}
+.photo-frame { padding: 10px; border: 1px solid var(--c-line); border-radius: 4px; background: var(--c-panel); }
+
+/* ---------- REVEAL ANIMATIONS ---------- */
+.reveal { opacity: 0; transform: translateY(var(--reveal-y)); transition: opacity 1.05s var(--ease), transform 1.05s var(--ease); will-change: opacity, transform; }
+.reveal.in { opacity: 1; transform: none; }
+.reveal-blur { opacity: 0; transform: translateY(14px); filter: blur(8px); transition: opacity 1.2s var(--ease), transform 1.2s var(--ease), filter 1.2s var(--ease); }
+.reveal-blur.in { opacity: 1; transform: none; filter: blur(0); }
+.reveal-scale { opacity: 0; transform: scale(1.06); transition: opacity 1.3s var(--ease), transform 1.6s var(--ease); }
+.reveal-scale.in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-blur, .reveal-scale { opacity: 1 !important; transform: none !important; filter: none !important; }
+  html { scroll-behavior: auto; }
+}
+@media print {
+  .reveal, .reveal-blur, .reveal-scale { opacity: 1 !important; transform: none !important; filter: none !important; }
+}
+html.reveal-all .reveal, html.reveal-all .reveal-blur, html.reveal-all .reveal-scale { opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important; }
+
+/* ---------- COUNTDOWN ---------- */
+.count-card {
+  background: var(--c-panel); border: 1px solid var(--c-line); border-radius: 14px;
+  padding: 18px 8px 14px; text-align: center;
+  box-shadow: 0 24px 50px -40px rgba(0,0,0,0.5);
+}
+.count-num {
+  font-family: var(--font-display); font-weight: var(--display-weight);
+  font-size: clamp(34px, 9vw, 56px); line-height: 1; color: var(--c-ink);
+  font-variant-numeric: tabular-nums;
+}
+.count-label { font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--c-muted); margin-top: 9px; }
+
+/* ---------- CARD ---------- */
+.card {
+  background: var(--c-panel); border: 1px solid var(--c-line); border-radius: 18px;
+  box-shadow: 0 40px 80px -60px rgba(0,0,0,0.5);
+}
+
+/* ---------- SCRIM ---------- */
+.scrim {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to bottom,
+      rgba(26, 21, 14, 0.34) 0%,
+      rgba(26, 21, 14, 0.30) 38%,
+      rgba(26, 21, 14, 0.48) 72%,
+      color-mix(in oklab, var(--c-bg) 80%, transparent) 92%,
+      var(--c-bg) 100%);
+}
+.scrim::after {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(120% 70% at 50% 42%, rgba(26,21,14,0.34) 0%, transparent 62%);
+}
+
+/* botón fantasma legible sobre la foto del hero */
+.hero-dark .btn-ghost { color: #FCF8F0; border-color: rgba(252, 248, 240, 0.55); background: rgba(20, 16, 10, 0.12); }
+.hero-dark .btn-ghost:hover { color: #fff; border-color: #fff; transform: translateY(-2px); }
+
+/* ---------- TIMELINE (cronograma) ---------- */
+.tl { position: relative; }
+.tl::before {
+  content: ""; position: absolute; left: 11px; top: 6px; bottom: 6px;
+  width: 1px; background: var(--c-line);
+}
+.tl-dot {
+  position: relative; z-index: 1; flex: 0 0 auto;
+  width: 23px; height: 23px; border-radius: 999px;
+  background: var(--c-bg); border: 1px solid var(--c-accent);
+  display: grid; place-items: center;
+}
+.tl-dot::after { content: ""; width: 7px; height: 7px; border-radius: 999px; background: var(--c-accent); }
+
+/* ---------- GALLERY (premium) ---------- */
+.gallery-tile {
+  position: relative; overflow: hidden; border-radius: 12px;
+  box-shadow: 0 30px 60px -44px rgba(0,0,0,0.55);
+  transition: transform .7s var(--ease), box-shadow .7s var(--ease);
+}
+.gallery-tile img {
+  transition: transform 1.2s var(--ease), filter 1.2s var(--ease);
+  transform: scale(1.02);
+}
+.gallery-tile .gallery-veil {
+  position: absolute; inset: 0; pointer-events: none; border-radius: inherit;
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--c-accent) 18%, transparent);
+  background:
+    linear-gradient(to top, color-mix(in oklab, var(--c-ink) 26%, transparent) 0%, transparent 42%);
+  opacity: 0; transition: opacity .7s var(--ease);
+}
+@media (hover: hover) {
+  .gallery-tile:hover { transform: translateY(-4px); box-shadow: 0 40px 70px -38px rgba(0,0,0,0.6); }
+  .gallery-tile:hover img { transform: scale(1.08); filter: saturate(1.05); }
+  .gallery-tile:hover .gallery-veil { opacity: 1; }
+}
+
+/* ---------- GIFT CARD (premium) ---------- */
+.gift-card {
+  transition: transform .55s var(--ease), box-shadow .55s var(--ease);
+}
+.gift-card .gift-glow {
+  position: absolute; inset: 0; pointer-events: none; opacity: .7;
+  background: radial-gradient(120% 80% at 50% 0%, color-mix(in oklab, var(--c-accent) 12%, transparent), transparent 68%);
+}
+.gift-card .ornament::before, .gift-card .ornament::after { width: 38px; }
+@media (hover: hover) {
+  .gift-card:hover { transform: translateY(-3px); box-shadow: 0 50px 90px -54px rgba(0,0,0,0.55); }
+  .gift-card:hover .gift-copy { border-color: var(--c-accent); color: var(--c-accent); }
+}
+
+/* ---------- CARD lift on hover ---------- */
+.card { transition: box-shadow .55s var(--ease), transform .55s var(--ease); }
+
+/* utility */
+.tracking-wide-2 { letter-spacing: 0.18em; }
+.no-tap { -webkit-tap-highlight-color: transparent; }
