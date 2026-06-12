@@ -201,20 +201,6 @@ html.reveal-all .reveal, html.reveal-all .reveal-blur, html.reveal-all .reveal-s
   .gallery-tile:hover .gallery-veil { opacity: 1; }
 }
 
-/* ---------- GIFT CARD (premium) ---------- */
-.gift-card {
-  transition: transform .55s var(--ease), box-shadow .55s var(--ease);
-}
-.gift-card .gift-glow {
-  position: absolute; inset: 0; pointer-events: none; opacity: .7;
-  background: radial-gradient(120% 80% at 50% 0%, color-mix(in oklab, var(--c-accent) 12%, transparent), transparent 68%);
-}
-.gift-card .ornament::before, .gift-card .ornament::after { width: 38px; }
-@media (hover: hover) {
-  .gift-card:hover { transform: translateY(-3px); box-shadow: 0 50px 90px -54px rgba(0,0,0,0.55); }
-  .gift-card:hover .gift-copy { border-color: var(--c-accent); color: var(--c-accent); }
-}
-
 /* ---------- CARD lift on hover ---------- */
 .card { transition: box-shadow .55s var(--ease), transform .55s var(--ease); }
 

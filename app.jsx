@@ -35,9 +35,6 @@ const DATA = {
 
   dressCode: "Formal",
 
-  // Regalos · luna de miel
-  alias: "Leonel.gela.bert",
-
   // Fotos
   photoHero:  "photos/hero.png",
   photoStory: "photos/historia.jpg",
@@ -96,10 +93,6 @@ const COPY = {
   rsvpTitle: "Confirmá tu asistencia",
   rsvpText: "Tu presencia es muy importante para nosotros. Por favor confirmanos si vas a acompañarnos para poder organizar cada detalle con cariño.",
 
-  giftsEyebrow: "Regalos",
-  giftsTitle: "Tu presencia es nuestro mejor regalo",
-  giftsText: "Si además querés acompañarnos con un presente para arrancar esta nueva etapa y nuestra luna de miel, te dejamos nuestros datos con todo el cariño.",
-
   galleryEyebrow: "Momentos",
   galleryTitle: "Un poco de nosotros",
 
@@ -130,7 +123,6 @@ function App() {
       <Cronograma data={data} copy={copy} />
       <ComoLlegar data={data} copy={copy} />
       <Rsvp data={data} copy={copy} />
-      <Gifts data={data} copy={copy} />
       {t.showGallery && <Gallery copy={copy} data={data} />}
       <Footer data={data} copy={copy} />
 
